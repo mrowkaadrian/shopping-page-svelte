@@ -51,7 +51,7 @@
     <div class="product-list">
         {#each products as product}
             <div class="product">
-                <img src="{product.image}" />
+                <img src="{product.image}"  alt="{product.name}"/>
                 <h4>{product.name}</h4>
                 <p>{product.price}$</p>
                 <button on:click={() => addToCart(product)}>Add to cart</button>
@@ -64,7 +64,7 @@
     <div class="cart-list">
         {#each cart as item}
             <div class="cart-item">
-                <img width="20" src="{item.image}" />
+                <img width="20" src="{item.image}"  alt="{item.name}"/>
                 <div>
                     {item.quantity}
                     <button on:click={() => decrementAmount(item)}>-</button>
