@@ -3,9 +3,9 @@
     let guid = 1;
     let cart = [];
     const products = [
-        {id: guid++, name: "Apple", image: "assets/apple.jpg", price: 1},
-        {id: guid++, name: "Banana", image: "assets/banana.jpg", price: 2},
-        {id: guid++, name: "Orange", image: "assets/orange.jpg", price: 3}
+        {id: guid++, name: "Apple", image: "assets/apple.png", price: 1},
+        {id: guid++, name: "Banana", image: "assets/banana.png", price: 2},
+        {id: guid++, name: "Orange", image: "assets/orange.png", price: 3}
     ];
     $: total_price = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
@@ -102,6 +102,7 @@
     }
 
     img {
+        margin: 5px;
         height: 150px;
         width: 150px;
         background-size: contain;
