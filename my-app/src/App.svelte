@@ -1,14 +1,19 @@
 <script>
+
     let guid = 1;
     let cart = [];
-    let products = [
-        {id: guid++, name: "Apple", image: "assets/apple.jpg", price: 1, quantity: 1},
-        {id: guid++, name: "Banana", image: "assets/banana.jpg", price: 2, quantity: 1},
-        {id: guid++, name: "Orange", image: "assets/orange.jpg", price: 3, quantity: 1}
+    const products = [
+        {id: guid++, name: "Apple", image: "assets/apple.jpg", price: 1},
+        {id: guid++, name: "Banana", image: "assets/banana.jpg", price: 2},
+        {id: guid++, name: "Orange", image: "assets/orange.jpg", price: 3}
     ];
     $: total_price = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
     const addToCart = (product) => {
+        let cartProduct = {
+            ...product,
+            quantity: 1
+        }
         for (let item of cart) {
             if (item.id === product.id) {
                 item.quantity++;
@@ -16,8 +21,30 @@
                 return
             }
         }
-        cart = [...cart, product]
+        cart = [...cart, cartProduct]
     }
+
+    const incrementAmount = (product) => {
+        addToCart(product);
+    }
+
+    const decrementAmount = (product) => {
+        for (let item of cart) {
+            if (item.id === product.id) {
+                if (--item.quantity === 0)
+                    removeItemFromCart(product)
+                cart = cart;
+                console.log(products);
+                return;
+            }
+        }
+        console.log(products);
+    }
+
+    const removeItemFromCart = (product) => {
+        cart = cart.filter(item => item.id !== product.id);
+    }
+
 </script>
 
 <main>
@@ -38,7 +65,11 @@
         {#each cart as item}
             <div class="cart-item">
                 <img width="20" src="{item.image}" />
-                <p>{item.quantity}</p>
+                <div>
+                    {item.quantity}
+                    <button on:click={() => decrementAmount(item)}>-</button>
+                    <button on:click={() => incrementAmount(item)}>+</button>
+                </div>
                 <p>{item.price * item.quantity}$</p>
             </div>
         {/each}
@@ -52,6 +83,11 @@
     .product-list, .cart-item {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .cart-list {
+        border: 2px solid #1a1a1a;
+        padding: 1em;
     }
 
     .cart-total {
