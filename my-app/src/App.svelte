@@ -64,13 +64,13 @@
     <div class="cart-list">
         {#each cart as item}
             <div class="cart-item">
-                <img width="20" src="{item.image}"  alt="{item.name}"/>
-                <div>
+                <img class="cart-item-details" src="{item.image}"  alt="{item.name}"/>
+                <div class="cart-item-details">
                     {item.quantity}
                     <button on:click={() => decrementAmount(item)}>-</button>
                     <button on:click={() => incrementAmount(item)}>+</button>
                 </div>
-                <p>{item.price * item.quantity}$</p>
+                <p class="cart-item-details">{item.price * item.quantity}$</p>
             </div>
         {/each}
         <div class="cart-total">
@@ -92,6 +92,13 @@
 
     .cart-total {
         text-align: right;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
     }
 
     img {
