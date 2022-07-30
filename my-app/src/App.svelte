@@ -6,6 +6,7 @@
         {id: guid++, name: "Banana", image: "assets/banana.jpg", price: 2, quantity: 1},
         {id: guid++, name: "Orange", image: "assets/orange.jpg", price: 3, quantity: 1}
     ];
+    $: total_price = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
     const addToCart = (product) => {
         for (let item of cart) {
@@ -23,20 +24,38 @@
     <div class="product-list">
         {#each products as product}
             <div class="product">
-                <img src="{product.image}">
+                <img src="{product.image}" />
                 <h4>{product.name}</h4>
                 <p>{product.price}$</p>
                 <button on:click={() => addToCart(product)}>Add to cart</button>
             </div>
         {/each}
     </div>
-    Cart: {JSON.stringify(cart)}
+
+    <h1>Cart</h1>
+
+    <div class="cart-list">
+        {#each cart as item}
+            <div class="cart-item">
+                <img width="20" src="{item.image}" />
+                <p>{item.quantity}</p>
+                <p>{item.price * item.quantity}$</p>
+            </div>
+        {/each}
+        <div class="cart-total">
+            <h4> Total: {total_price}$ </h4>
+        </div>
+    </div>
 </main>
 
 <style>
-    .product-list {
+    .product-list, .cart-item {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .cart-total {
+        text-align: right;
     }
 
     img {
